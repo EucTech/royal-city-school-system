@@ -8,9 +8,9 @@ interface LayoutProps {
 
 const Layout = ({children}: LayoutProps) => {
   return (
-    <div className='flex'>
+    <div className='flex w-full h-screen bg-[#d8dfe6]'>
         <Sidebar />
-        <div className=''>{children}</div>
+        <div className='flex-1 h-screen overflow-auto'>{children}</div>
     </div>
   )
 }
