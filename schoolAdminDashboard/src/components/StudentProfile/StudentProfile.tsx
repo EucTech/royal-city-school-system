@@ -134,7 +134,8 @@ const StudentProfile = () => {
             ))}
           </Table.Body>
         </Table>
-        <Pagination
+      </div>
+      <Pagination
         pagination={filterByClass}
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
@@ -144,8 +145,6 @@ const StudentProfile = () => {
           setCurrentPage(1);
         }}
       />
-      </div>
-
     </div>
   );
 };
