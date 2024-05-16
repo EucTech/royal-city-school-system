@@ -1,7 +1,7 @@
 // import React from 'react'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AdminLogin from "./Pages/AdminLogin";
-// import StudentProfile from "./components/StudentProfile/StudentProfile";
+import StudentProfile from "./components/StudentProfile/StudentProfile";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Courses from "./components/Courses/Courses";
 import Notice from "./components/Notice/Notice";
@@ -17,7 +17,7 @@ const LayoutComponent = () => {
       <Layout>
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
-          {/* <Route path="/dashboard/student-info" element={<StudentProfile />} /> */}
+          <Route path="/dashboard/student-info" element={<StudentProfile />} />
           <Route path="/dashboard/courses" element={<Courses />} />
           <Route path="/dashboard/notice" element={<Notice />} />
           <Route path="/dashboard/result" element={<Result />} />
