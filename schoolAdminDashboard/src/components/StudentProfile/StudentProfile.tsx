@@ -70,7 +70,7 @@ const StudentProfile = () => {
         value={searchQuery}
         onChange={handleSearch}
         placeholder="Search for student"
-        className="w-[40%] h-[40px] border-2 border-solid border-[#bebdbd] focus:outline-none focus:ring-2 focus:ring-[#430A5D] focus:border-transparent py-2 pl-3 rounded-lg"
+        className="w-[80%] sm:w-[40%] h-[40px] text-[12px] border-2 border-solid border-[#bebdbd] focus:outline-none focus:ring-2 focus:ring-[#430A5D] focus:border-transparent py-2 pl-3 rounded-lg"
       />
       <div className="flex flex-wrap  items-center gap-4 justify-between">
         <div className={` ${overviewsClass}`}>
