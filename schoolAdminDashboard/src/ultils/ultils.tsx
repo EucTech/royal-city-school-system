@@ -1,5 +1,5 @@
 import { MdSpaceDashboard } from "react-icons/md"
-// import { PiStudentLight } from "react-icons/pi";
+import { PiStudentLight } from "react-icons/pi";
 import { MdLibraryBooks } from "react-icons/md";
 import { TfiAnnouncement } from "react-icons/tfi";
 import { FaBookOpenReader } from "react-icons/fa6";
@@ -28,11 +28,11 @@ export const links: LinkType[] = [
         icon: <MdSpaceDashboard />,
         link: "/dashboard",
       },
-      // {
-      //   name: "Student Info",
-      //   icon: <PiStudentLight />,
-      //   link: "/dashboard/student-info",
-      // },
+      {
+        name: "Student Info",
+        icon: <PiStudentLight />,
+        link: "/dashboard/student-info",
+      },
       {
         name: "Courses",
         icon: <MdLibraryBooks />,
