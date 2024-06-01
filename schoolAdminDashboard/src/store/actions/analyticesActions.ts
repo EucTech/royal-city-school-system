@@ -20,7 +20,7 @@ export const fetchAllStudents =  () => async (dispatch: AppDispatch) => {
     } finally{
         dispatch({ type: types.ISLOADING, payload: false });
     }
-} 
+};
 
 export const fetchTotalStudents = () => async (dispatch: AppDispatch) => {
     try {
@@ -37,4 +37,4 @@ export const fetchTotalStudents = () => async (dispatch: AppDispatch) => {
     } finally{
         dispatch({ type: types.ISLOADING, payload: false });
     }
-}
+};

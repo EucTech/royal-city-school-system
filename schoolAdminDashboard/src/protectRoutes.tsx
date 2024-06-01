@@ -1,4 +1,3 @@
-import React, { Component } from "react";
 import { Navigate } from "react-router";
 import { useLocation } from "react-router";
 import { useSelector } from "react-redux";

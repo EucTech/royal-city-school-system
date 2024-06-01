@@ -3,15 +3,10 @@ import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { links } from "../ultils/ultils";
 import { IoIosArrowBack } from "react-icons/io";
-// import Logo from "../assets/react.svg";
-// import Banner from "@/public/assets/images/dashboard/banner.png";
 import { NavLink, useLocation } from "react-router-dom";
+import { removeAccessToken } from "../ultils/tokenData";
 
-// import useLogout from "@/hooks/useLogout";
 
-// interface UseLogoutReturn {
-//   handleLogout: () => void;
-// }
 
 const Sidebar = () => {
   const [toggleCollapse, setToggleCollapse] = useState(false);
@@ -19,7 +14,6 @@ const Sidebar = () => {
   const location = useLocation();
   const activePath = location.pathname;
   console.log("activePath", activePath);
-  //   const { handleLogout } = useLogout() as UseLogoutReturn;
 
   useEffect(function mount() {
     const checkScreenSize = () => {
@@ -33,6 +27,11 @@ const Sidebar = () => {
 
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
+
+  const handleLogout = () => {
+    removeAccessToken();
+    window.location.href = "/login";
+  };
 
   const wrapperClasses = classNames(
     "flex flex-col h-[100%]  md:overflow-auto pb-2 rounded-tr-[0] bg-[#430A5D]",
@@ -124,7 +123,7 @@ const Sidebar = () => {
                   <button
                     key={link.name}
                     className={getNavItemClasses(link)}
-                    // onClick={handleLogout}
+                    onClick={handleLogout}
                   >
                     <div
                       style={{ width: "1.8rem" }}

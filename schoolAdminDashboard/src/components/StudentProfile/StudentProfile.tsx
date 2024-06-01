@@ -147,9 +147,9 @@ const StudentProfile = () => {
                   Loading...
                 </Table.Cell>
               </Table.Row>
-            )  : currentItems?.map((info: any, index: number) => (
+            )  : currentItems?.map((info: any) => (
               <Table.Row
-                key={index}
+                key={info?._id}
                 className="bg-white dark:border-gray-700 dark:bg-gray-800"
               >
                 <Table.Cell className=" py-3 whitespace-nowrap font-medium text-[#5e5b5b] dark:text-white">
