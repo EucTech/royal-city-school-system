@@ -25,8 +25,8 @@ const Courses = () => {
             <input placeholder="Enter the Subject" className=" border-2 border-solid border-[#E6E6E6] focus:outline-none focus:ring-2 focus:ring-[#430A5D] focus:border-transparent py-2 pl-3 rounded-lg" type="text" name="subject" id="subject" />
           </div>
           <div className="flex flex-col gap-3 ">
-            <label className="text-[#430A5D] text-[15px] font-medium" htmlFor="class">Class</label>
-            <input placeholder="Enter the Class" className="  border-2 border-solid border-[#E6E6E6] focus:outline-none focus:ring-2 focus:ring-[#430A5D] focus:border-transparent py-2 pl-3 rounded-lg" type="text" name="class" id="class" />
+            <label className="text-[#430A5D] text-[15px] font-medium" htmlFor="class">Teacher</label>
+            <input placeholder="Enter the teacher" className="  border-2 border-solid border-[#E6E6E6] focus:outline-none focus:ring-2 focus:ring-[#430A5D] focus:border-transparent py-2 pl-3 rounded-lg" type="text" name="teacher" id="teacher" />
           </div>
         </div>
         <button className="bg-[#430A5D] text-white py-2 rounded-lg active:scale-95">Add Subject</button>

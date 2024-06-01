@@ -1,20 +1,48 @@
 // import React from "react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 // import moment from "moment";
+import { fetchSchoolLogin } from "../store/actions/authActions";
+import { RootState } from "../store/store";
+import { AppDispatch } from "../store/store";
+import { useDispatch, useSelector} from "react-redux";
+import { LOGIN_SUCCESS } from "../store/actions/actionTypes";
+
 
 const AdminLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch<AppDispatch>();
+  const {isLoading} = useSelector((state: RootState) => state.auth);
+
 
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const handleSubmit = () => {
-    navigate("/dashboard");
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    if (e.email !== "" && e.password !== "") {
+      const formData = new FormData(e.currentTarget);
+      const payload = {
+        email: formData.get("email") as string,
+        password: formData.get("password") as string,
+      };
+      try {
+        const actionResult: any = await dispatch(fetchSchoolLogin(payload));
+        if (actionResult.type === LOGIN_SUCCESS) {
+          const redirectPath = new URLSearchParams(location.search).get("redirect") || "/dashboard";
+          navigate(redirectPath);
+          console.log("Redirect to: ", redirectPath);
+        }
+      } catch (error: any) {
+        console.error("An error ocurred: ", error.message);
+      }
+    }
   };
 
   return (
@@ -36,7 +64,9 @@ const AdminLogin = () => {
               <input
                 id="email"
                 type="email"
+                name="email"
                 placeholder="Your email"
+                value="royalcityschool@gmail.com"
                 required
                 className="w-full pt-[11px] pb-[11px] text-[#666666] pl-3 text-[16px] border-2 border-solid border-[#E6E6E6] focus:outline-none focus:ring-2 focus:ring-[#430A5D] focus:border-transparent rounded-lg"
               />
@@ -50,6 +80,8 @@ const AdminLogin = () => {
               <div className="relative">
                 <input
                   id="password"
+                  name="password"
+                  value="royal123"
                   type={showPassword ? "text" : "password"}
                   placeholder="Your Password"
                   required
@@ -79,7 +111,7 @@ const AdminLogin = () => {
               className="text-white bg-[#430A5D] rounded-lg p-3 mt-8 hover:bg-opacity-90 active:scale-95"
               type="submit"
             >
-              Log in
+              {isLoading ? "Loading" : "Log in"}
             </button>
           </form>
           {/* <p className="mt-3 text-sm text-center text-[#666666]">

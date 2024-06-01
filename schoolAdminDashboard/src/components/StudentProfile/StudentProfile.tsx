@@ -1,54 +1,82 @@
-// import React from 'react'
+import React from 'react'
 import classNames from "classnames";
 import { Table } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { PiStudentFill } from "react-icons/pi";
-import { AllStudent } from "../../ultils/students";
+// import { AllStudent } from "../../ultils/students";
 import { Pagination } from "../Pagination";
+import { AppDispatch } from "../../store/store";
+import { RootState } from "../../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllStudents, fetchTotalStudents } from "../../store/actions/analyticesActions";
+
 
 const StudentProfile = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const {totalStudents, allStudents, isLoading} = useSelector((state: RootState) => state.analytices);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
 
   // state for filter
-  const [filterByClass, setFilterByClass] = useState(AllStudent);
+  const [filterByClass, setFilterByClass] = useState<any[]>([]);
   const [classboader, setClassboader] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
+  const [numberofStudentsInClass, setNumberofStudentInClass]: any = useState({});
 
-
-  // const totalPages = Math.ceil(User.length / itemsPerPage);
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filterByClass.slice(indexOfFirstItem, indexOfLastItem);
-
-  const totalStudents = AllStudent.length;
+  console.log("allStudents", allStudents);
  
-  const Classes = ["All", "JSS 1", "JSS 2", "JSS 3", "SS 1", "SS 2", "SS 3"];
+    useEffect(() => {
+      dispatch(fetchTotalStudents());
+      dispatch(fetchAllStudents());
+    },[dispatch])
+
+  // const totalStudents = AllStudent.length;
+ 
+  const Classes = ["All", "JSS 1", "JSS 2", "JSS 3", "SSS 1", "SSS 2", "SSS 3"];
+
+  
+  useEffect(() => {
+    let filteredStudents = Array.isArray(allStudents) ? [...allStudents] : [];
+  
+    if (classboader !== 0) {
+      filteredStudents = filteredStudents.filter(
+        (student: any) => student.student_class === Classes[classboader]
+      );
+    }
+  
+    if (searchQuery) {
+      filteredStudents = filteredStudents.filter(
+        (student: any) =>
+          student.firstname.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          student.lastname.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          student.email.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+  
+    setFilterByClass(filteredStudents);
+    setCurrentPage(1);
+  }, [classboader, searchQuery, allStudents]);
 
   useEffect(() => {
-    if (classboader === 0) {
-      setFilterByClass(AllStudent);
-    } else {
-      let filtered = AllStudent.filter(
-        (item) => item.class === Classes[classboader]
-      );
+    const classCounts = Classes.reduce((counts: any, currentClass: any) => {
+      counts[currentClass] = allStudents.filter((student: any) => student.student_class === currentClass).length;
+      return counts;
+    }, {});
 
-      // Filter by search query
-    if (searchQuery) {
-      filtered = filtered.filter((item) =>
-        item.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.email.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
+    classCounts["All"] = allStudents.length;
+    setNumberofStudentInClass(classCounts);
+  
+  }, [allStudents]);
 
-      setFilterByClass(filtered);
-      setCurrentPage(1);
-    }
-  }, [classboader, searchQuery]);
+   // const totalPages = Math.ceil(User.length / itemsPerPage);
+   const indexOfLastItem = currentPage * itemsPerPage;
+   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+   const currentItems = filterByClass.slice(indexOfFirstItem, indexOfLastItem);
+ 
 
   const handleClick = (index: number) => {
-    console.log("clicked");
+    // console.log("clicked");
     setClassboader(index);
   };
 
@@ -60,6 +88,9 @@ const StudentProfile = () => {
     "flex flex-col items-center justify-center gap-3 w-[18em] h-[10em] sm:h-[12em] p-3 border-[3px] border-[#430A5D] bg-white border-solid rounded-[30px]"
   );
 
+  // if(isLoading){
+  //   return <div>Loading...</div>
+  // }
 
   return (
     <div
@@ -78,15 +109,15 @@ const StudentProfile = () => {
           <h1 className="text-[17px] sm:text-[20px] text-[#322C2B] font-semibold">
             Total Students
           </h1>
-          <p className="text-[15px] text-[#000] font-medium">{totalStudents}</p>
+          <p className="text-[15px] text-[#000] font-medium">{isLoading ? "Loading..." : totalStudents.data}</p>
         </div>
         <div className="flex justify-items-center flex-wrap gap-4 mr-14" >
-          {Classes.map((item, index) => (
+          {Classes.map((item: any, index: any) => (
             <div key={index} onClick={() => handleClick(index)} className={`cursor-pointer flex flex-col gap-1 items-center py-1 px-3 rounded-lg border-2 border-solid  ${classboader === index? "border-[#430A5D]": ""}`}>
               <h1 className=" text-[15px] sm:text-[18px] text-[#430A5D] font-semibold">
                 {item}
               </h1>
-              <p className="text-[14px] text-[#000] font-medium">100</p>
+              <p className="text-[14px] text-[#000] font-medium">{numberofStudentsInClass[item]}</p>
             </div>
           ))}
         </div>
@@ -110,25 +141,31 @@ const StudentProfile = () => {
             <Table.HeadCell className="text-[#1A1313]">CLASS</Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y ">
-            {currentItems.map((info, index) => (
+            {isLoading ? (
+              <Table.Row>
+                <Table.Cell colSpan={5} className="text-center py-3">
+                  Loading...
+                </Table.Cell>
+              </Table.Row>
+            )  : currentItems?.map((info: any, index: number) => (
               <Table.Row
                 key={index}
                 className="bg-white dark:border-gray-700 dark:bg-gray-800"
               >
                 <Table.Cell className=" py-3 whitespace-nowrap font-medium text-[#5e5b5b] dark:text-white">
-                  {info.id}
+                  {info?._id}
                 </Table.Cell>
                 <Table.Cell className=" py-3 whitespace-nowrap font-medium text-[#5e5b5b] dark:text-white">
-                  {info.firstName}
+                  {info?.firstname}
                 </Table.Cell>
                 <Table.Cell className="py-3 whitespace-nowrap font-medium text-[#5e5b5b] dark:text-white">
-                  {info.lastName}
+                  {info?.lastname}
                 </Table.Cell>
                 <Table.Cell className="py-3 whitespace-nowrap font-medium text-[#5e5b5b] dark:text-white">
-                  {info.email}
+                  {info?.email}
                 </Table.Cell>
                 <Table.Cell className="py-3 whitespace-nowrap font-medium text-[#5e5b5b] dark:text-white">
-                  {info.class}
+                  {info?.student_class}
                 </Table.Cell>
               </Table.Row>
             ))}

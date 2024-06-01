@@ -10,6 +10,21 @@ import PaymentInfo from "./components/PaymentInfo/PaymentInfo";
 import Schedule from "./components/Schedule/Schedule";
 // import TeacherProfile from "./components/TeacherProfile/TeacherProfile";
 import Layout from "./components/Layout";
+import ProtectedRoute from "./protectRoutes";
+import { Toaster } from "react-hot-toast";
+import NotFound from "./Pages/NotFound";
+
+interface ToasterProps {
+  position: "top-right" | "bottom-right" | "top-left" | "bottom-left"; 
+  reverseOrder?: boolean; 
+  duration?: number; 
+}
+
+const toastProps: ToasterProps = {
+  position: "top-right",
+  reverseOrder: true,
+  duration: 4000,
+};
 
 const LayoutComponent = () => {
   return (
@@ -24,6 +39,7 @@ const LayoutComponent = () => {
           <Route path="/dashboard/payment-info" element={<PaymentInfo />} />
           <Route path="/dashboard/schedule" element={<Schedule />} />
           {/* <Route path="/dashboard/teacher-info" element={<TeacherProfile />} /> */}
+          <Route path="*" element={<NotFound/>} />
         </Routes>
       </Layout>
     </div>
@@ -36,9 +52,11 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AdminLogin />} />
-          <Route path="/*" element={<LayoutComponent />} />
+          <Route path="/login" element={<AdminLogin />} />
+          <Route path="/*" element={<ProtectedRoute component={LayoutComponent}/>} />
         </Routes>
       </BrowserRouter>
+      <Toaster {...toastProps} />
     </div>
   );
 };
