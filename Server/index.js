@@ -14,7 +14,6 @@ app.get('/', (req, res) => {
     res.send('server is running');
 });
 
-
 // Routes
 const routes = require('./routes/routes');
 app.use('/api/v1', routes);
