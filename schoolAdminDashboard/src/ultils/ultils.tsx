@@ -2,9 +2,9 @@ import { MdSpaceDashboard } from "react-icons/md"
 import { PiStudentLight } from "react-icons/pi";
 import { MdLibraryBooks } from "react-icons/md";
 import { TfiAnnouncement } from "react-icons/tfi";
-import { FaBookOpenReader } from "react-icons/fa6";
-import { MdPayments } from "react-icons/md";
-import { RiCalendarScheduleLine } from "react-icons/ri";
+// import { FaBookOpenReader } from "react-icons/fa6";
+// import { MdPayments } from "react-icons/md";
+// import { RiCalendarScheduleLine } from "react-icons/ri";
 
 
 import logout from "/src/assets/icons/logout.png";
@@ -43,21 +43,21 @@ export const links: LinkType[] = [
         icon: <TfiAnnouncement />,
         link: "/dashboard/notice",
       },
-      {
-        name: "Result",
-        icon: <FaBookOpenReader />,
-        link: "/dashboard/result",
-      },
-      {
-        name: "Payment Info",
-        icon: <MdPayments />,
-        link: "/dashboard/payment-info",
-      },
-      {
-        name: "Schedule",
-        icon: <RiCalendarScheduleLine />,
-        link: "/dashboard/schedule",
-      },
+      // {
+      //   name: "Result",
+      //   icon: <FaBookOpenReader />,
+      //   link: "/dashboard/result",
+      // },
+      // {
+      //   name: "Payment Info",
+      //   icon: <MdPayments />,
+      //   link: "/dashboard/payment-info",
+      // },
+      // {
+      //   name: "Schedule",
+      //   icon: <RiCalendarScheduleLine />,
+      //   link: "/dashboard/schedule",
+      // },
     ],
   },
   {
