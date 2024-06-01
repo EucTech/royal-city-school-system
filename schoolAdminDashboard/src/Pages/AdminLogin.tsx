@@ -66,7 +66,6 @@ const AdminLogin = () => {
                 type="email"
                 name="email"
                 placeholder="Your email"
-                value="royalcityschool@gmail.com"
                 required
                 className="w-full pt-[11px] pb-[11px] text-[#666666] pl-3 text-[16px] border-2 border-solid border-[#E6E6E6] focus:outline-none focus:ring-2 focus:ring-[#430A5D] focus:border-transparent rounded-lg"
               />
@@ -81,7 +80,6 @@ const AdminLogin = () => {
                 <input
                   id="password"
                   name="password"
-                  value="royal123"
                   type={showPassword ? "text" : "password"}
                   placeholder="Your Password"
                   required
