@@ -5,7 +5,7 @@ const studentController = {};
 
 studentController.signup = async (req, res) => {
   try {
-    const { firstname, middlename, lastname, email, password, student_class, image, location } = req.body;
+    const { firstname, middlename, lastname, email, password, student_class, image, gender, location } = req.body;
 
     let checkEmail = await Student.findOne({
       email: req.body.email,
@@ -23,6 +23,8 @@ studentController.signup = async (req, res) => {
       errors += "Password is required";
     } else if (!location) {
       errors += "Enter your location";
+    } else if (!gender) {
+      errors += "Select your gender"
     } else if (!email) {
       errors += "Email is required";
     } else {
@@ -46,6 +48,7 @@ studentController.signup = async (req, res) => {
       password,
       student_class,
       image,
+      gender,
       location,
     });
 
