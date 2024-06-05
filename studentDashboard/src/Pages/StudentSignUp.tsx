@@ -3,7 +3,7 @@ import { FaAngleDown } from "react-icons/fa6";
 import classname from "classnames";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
-import { setAccessToken } from "../ultils/tokenData";
+// import { setAccessToken } from "../ultils/tokenData";
 
 
 const StudentSignUp: React.FC = () => {
@@ -14,8 +14,8 @@ const StudentSignUp: React.FC = () => {
   const [selectedClass, setSelectedClass] = useState("Select");
   const [isLoading, setIsLoading] = useState(false);
   
-  const [payload, setPayload] = useState({} as any);
-  const [error, setError] = useState({} as any);
+  // const [_, setPayload] = useState({} as any);
+  // const [error, setError] = useState({} as any);
 
   const navigate = useNavigate();
 
@@ -62,7 +62,6 @@ const StudentSignUp: React.FC = () => {
       setIsLoading(false);
       if (response.ok) {
         toast.success(data.message);
-        setPayload("");
         setGender("Select");
         setSelectedClass("Select");
         setIsLoading(false);
